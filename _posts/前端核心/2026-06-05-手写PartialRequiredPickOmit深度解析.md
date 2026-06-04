@@ -1,8 +1,9 @@
 ---
-title: "手写：Partial / Required / Pick / Omit"
+title: "手写 Partial / Required / Pick / Omit"
 date: 2026-06-05
 categories: ["前端核心", "TypeScript"]
-tags: [TypeScript, 工具类型, 类型体操, 手写实现]
+tags: ["TypeScript", "工具类型", "类型体操", "手写实现"]
+description: "深入剖析TypeScript内置工具类型Partial/Required/Pick/Omit的底层实现原理，从零手写理解映射类型、条件类型、keyof等核心机制"
 ---
 
 # 手写：Partial / Required / Pick / Omit
