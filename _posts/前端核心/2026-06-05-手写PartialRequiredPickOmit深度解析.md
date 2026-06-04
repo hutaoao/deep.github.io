@@ -7,7 +7,7 @@ tags: [TypeScript, 工具类型, 类型体操, 手写实现]
 
 # 手写：Partial / Required / Pick / Omit
 
-> TypeScript 内置工具类型是我们日常开发中最常用的利器。本文将深入剖析 `Partial<T>`、`Required<T>`、`Pick<T, K>`、`Omit<T, K>` 四个工具类型的底层实现原理，并带你从零手写这些工具类型，深入理解映射类型、keyof、条件类型等核心机制的协同工作方式。
+> TypeScript 内置工具类型是我们日常开发中最常用的利器；本文将深入剖析 `Partial<T>`、`Required<T>`、`Pick<T, K>`、`Omit<T, K>` 四个工具类型的底层实现原理，并带你从零手写这些工具类型，深入理解映射类型、keyof、条件类型等核心机制的协同工作方式。
 
 ---
 
