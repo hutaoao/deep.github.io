@@ -143,6 +143,7 @@ Composition API 中的生命周期钩子以 `on` 前缀命名，一一对应 Opt
 
 **Options API 版本：**
 
+{% raw %}
 ```vue
 <script>
 export default {
@@ -172,9 +173,11 @@ export default {
   </div>
 </template>
 ```
+{% endraw %}
 
 **Composition API 版本：**
 
+{% raw %}
 ```vue
 <script setup>
 import { ref, computed, watch } from 'vue'
@@ -199,6 +202,7 @@ watch(count, (newVal) => {
   </div>
 </template>
 ```
+{% endraw %}
 
 注意到几个关键变化：
 - 没有 `this`，全部是普通的变量和函数声明
@@ -602,6 +606,7 @@ export function useUserList() {
 
 **组件中使用：**
 
+{% raw %}
 ```vue
 <script setup lang="ts">
 import { useUserList } from '@/composables/useUserList'
@@ -643,6 +648,7 @@ startPolling(15000)
   </div>
 </template>
 ```
+{% endraw %}
 
 **这段代码的亮点**：
 - `useUserList` 是一个独立的函数，可以在任何组件中复用
@@ -675,7 +681,7 @@ function setupRenderEffect(instance, initialVNode, container) {
 }
 ```
 
-模板中的 `{{ count }}` 会被编译为 `$setup.count`（在 `<script setup>` 模式下）或通过渲染代理查找（非 `<script setup>` 模式）。
+模板中的 `{% raw %}{{ count }}{% endraw %}` 会被编译为 `$setup.count`（在 `<script setup>` 模式下）或通过渲染代理查找（非 `<script setup>` 模式）。
 
 ### 二、响应式系统的核心：Proxy
 

@@ -268,6 +268,7 @@ reconcileChildrenArray(returnFiber, currentFirstChild, newChildren, lanes)
 
 ## 最小示例
 
+{% raw %}
 ```jsx
 import React, { useState } from 'react';
 
@@ -582,6 +583,7 @@ const btnStyle = {
 
 export default DiffFullProcessDemo;
 ```
+{% endraw %}
 
 ## 实战案例（含完整代码）
 
@@ -589,6 +591,7 @@ export default DiffFullProcessDemo;
 
 一个模拟真实 TODO 应用场景的组件，展示每轮 Diff 的工作细节：
 
+{% raw %}
 ```jsx
 import React, { useState, useRef, useEffect } from 'react';
 
@@ -827,6 +830,7 @@ const labelStyle = {
 
 export default TodoDiffFullDemo;
 ```
+{% endraw %}
 
 ## 底层原理（含源码分析）
 

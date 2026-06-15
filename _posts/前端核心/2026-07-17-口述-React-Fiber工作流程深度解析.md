@@ -399,6 +399,7 @@ function completeUnitOfWork(unitOfWork: Fiber): void {
 
 下面的代码不是生产组件，而是帮助你**在控制台观察** Fiber 工作流程的工具：
 
+{% raw %}
 ```jsx
 import React, { useState, useEffect, useRef } from 'react';
 
@@ -535,6 +536,7 @@ function FiberFlowTracker() {
 
 export default FiberFlowTracker;
 ```
+{% endraw %}
 
 运行这个组件，在控制台观察每次更新时：
 1. beginWork 开始前 Fiber 的 lanes 状态

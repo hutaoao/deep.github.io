@@ -265,6 +265,7 @@ Object.is([], [])       // false
 
 ## 最小示例
 
+{% raw %}
 ```jsx
 import React, { useState, useMemo, useCallback } from 'react';
 
@@ -383,6 +384,7 @@ const btnStyle = {
 
 export default MemoAndCallbackDemo;
 ```
+{% endraw %}
 
 ## 实战案例（含完整代码）
 
@@ -390,6 +392,7 @@ export default MemoAndCallbackDemo;
 
 一个包含数据排序、过滤、页计算的表格组件，展示 useMemo 和 useCallback 在性能敏感场景中的正确用法：
 
+{% raw %}
 ```jsx
 import React, { useState, useMemo, useCallback, memo } from 'react';
 
@@ -685,6 +688,7 @@ const pageBtnStyle = {
 
 export default DataTable;
 ```
+{% endraw %}
 
 ## 底层原理（含源码分析）
 

@@ -489,6 +489,7 @@ function WindowSize() {
 
 ### 案例 3：useEffect 与 useLayoutEffect 的选择
 
+{% raw %}
 ```jsx
 function Tooltip({ targetRect, content }) {
   const [tooltipStyle, setTooltipStyle] = useState({ top: 0, left: 0 });
@@ -535,6 +536,7 @@ function Tooltip({ targetRect, content }) {
   );
 }
 ```
+{% endraw %}
 
 **设计原则**：
 - 需要读取 DOM 布局/尺寸、需要"视觉同步"的操作 → useLayoutEffect
