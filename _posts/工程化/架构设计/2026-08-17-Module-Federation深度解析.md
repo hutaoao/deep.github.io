@@ -138,6 +138,7 @@ module.exports = {
 配置完成后，在代码中引用远程模块就像引用 npm 包一样简单：
 
 ```javascript
+{% raw %}
 // ===== 在订单应用中引用商品模块 =====
 // apps/orders/src/pages/ProductSelectionPage.jsx
 
@@ -231,6 +232,7 @@ async function loadRemoteModule() {
 
 // 也支持静态 import（需要在 webpack config 中设置 eager）
 // import { store } from 'products_app/store';
+{% endraw %}
 ```
 
 ### 3. Shared 依赖的版本裁决
