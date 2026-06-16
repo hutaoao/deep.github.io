@@ -1,6 +1,6 @@
 ---
 title: Activity 与 Fragment 生命周期——跨平台开发者的生命周期管理必修课
-date: 2026-09-27
+date: 2026-10-17
 categories: ["原生扩展", "Android"]
 tags: ["原生扩展", "Android", "Activity", "Fragment", "生命周期", "屏幕旋转", "内存泄漏", "插件开发"]
 description: 系统讲解 Android Activity 与 Fragment 的生命周期机制、屏幕旋转时重建、状态保存与恢复，以及跨平台集成中常见的生命周期相关问题。

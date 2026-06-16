@@ -1,6 +1,6 @@
 ---
 title: build.gradle.kts 配置实战——跨平台开发者的 Gradle 构建指南
-date: 2026-09-24
+date: 2026-10-14
 categories: ["原生扩展", "Android"]
 tags: ["原生扩展", "Android", "Gradle", "build.gradle.kts", "AGP", "构建配置", "插件开发"]
 description: 系统讲解 Android 项目 build.gradle.kts 配置的方方面面，从项目级到模块级的配置要点、依赖管理、多渠道打包，帮助跨平台开发者掌控构建流程。

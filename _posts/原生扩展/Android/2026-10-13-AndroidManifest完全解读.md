@@ -1,6 +1,6 @@
 ---
 title: AndroidManifest.xml 完全解读——跨平台开发者必知的清单文件
-date: 2026-09-23
+date: 2026-10-13
 categories: ["原生扩展", "Android"]
 tags: ["原生扩展", "Android", "AndroidManifest", "清单文件", "插件开发", "权限声明"]
 description: 深入解析 AndroidManifest.xml 的结构、标签含义与配置要点，帮助 Flutter/RN/鸿蒙开发者理解为什么集成本地插件时总需要修改这个文件。
