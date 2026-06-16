@@ -6,9 +6,6 @@ categories: ["网络与性能", "网络协议"]
 tags: [WebSocket, 实时通信, 心跳机制, 断线重连]
 math: true
 mermaid: true
-image:
-  path: /images/default-banner.png
-  alt: "WebSocket通信机制深度解析"
 ---
 
 ## 一句话概括

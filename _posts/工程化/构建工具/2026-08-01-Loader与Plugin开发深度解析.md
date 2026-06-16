@@ -6,9 +6,6 @@ categories: ["工程化", "构建工具"]
 tags: [Webpack, Loader, Plugin, 自定义Loader, 自定义Plugin]
 math: true
 mermaid: true
-image:
-  path: /images/default-banner.png
-  alt: "Loader与Plugin开发深度解析"
 ---
 
 ## 一句话概括

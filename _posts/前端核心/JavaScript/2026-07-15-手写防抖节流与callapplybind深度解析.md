@@ -6,9 +6,6 @@ categories: ["前端核心", "JavaScript"]
 tags: [防抖, 节流, call, apply, bind, 手写题]
 math: true
 mermaid: true
-image:
-  path: /images/default-banner.png
-  alt: "手写防抖节流与call/apply/bind深度解析"
 ---
 
 ## 一句话概括
