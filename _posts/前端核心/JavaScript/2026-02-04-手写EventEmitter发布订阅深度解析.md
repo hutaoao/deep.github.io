@@ -1,28 +1,28 @@
 ---
 layout: post
-title: "手写 EventEmitter 发布订阅"
+title: "手写 EventEmitter"
 date: 2026-02-04
 categories: ["前端核心", "JavaScript"]
-tags: ["EventEmitter", "发布订阅", "手写题", "设计模式"]
+tags: ["EventEmitter", "发布订阅", "设计模式", "手写", "面试"]
 ---
 
 ## 一句话概括
 
-EventEmitter 是发布订阅模式在 Node.js 中的实现——用 `on` 订阅、`emit` 发布、`off` 取消、`once` 只执行一次，底层就是用一个对象存事件名到回调数组的映射。
+EventEmitter 是发布订阅模式的标准实现——用一个对象存事件名到回调数组的映射，`on` 订阅、`emit` 触发、`off` 移除、`once` 自动化清理。面试考的是你处理 `once` 的包装技巧和 `emit` 中途移除回调的边界情况。
 
 ## 核心知识点
 
-### 1. 基础骨架 — 事件名 → 回调数组
+### 1. 骨架 —— 事件名 → 回调数组
 
 ```javascript
 class EventEmitter {
   constructor() {
-    this._events = {};  // { 'click': [fn1, fn2], 'load': [fn3] }
+    this._events = Object.create(null); // { 'click': [fn1, fn2] }
   }
 
   on(event, fn) {
     (this._events[event] ??= []).push(fn);
-    return this;  // 支持链式调用
+    return this; // 支持链式调用
   }
 
   emit(event, ...args) {
@@ -37,108 +37,108 @@ class EventEmitter {
 }
 ```
 
-就这么简单。但面试不会只让你写到这。
+就这么简单。但面试官会让你在此基础上暴露盲点。
 
-### 2. once — 执行一次后自动移除
+### 2. once —— 执行一次后自毁
 
 ```javascript
 once(event, fn) {
   const wrapper = (...args) => {
-    fn(...args);
-    this.off(event, wrapper); // 执行后立刻移除
+    this.off(event, wrapper);
+    fn.apply(this, args);
   };
-  // 关键：把 wrapper 挂到 fn 上，方便用户手动 off
-  wrapper._original = fn;
-  this.on(event, wrapper);
-  return this;
+  wrapper._original = fn; // 保存原始引用，方便外部 off
+  return this.on(event, wrapper);
 }
 
-// off 也要升级——允许通过原始 fn 找到 wrapper 并移除
+// off 升级：能移除 once 的回调
 off(event, fn) {
   const fns = this._events[event];
   if (!fns) return this;
-  // fn 可能是 once 的原始回调，也可能是普通回调
   this._events[event] = fns.filter(cb => cb !== fn && cb._original !== fn);
   return this;
 }
 ```
 
-### 3. 监听器数量限制 — 防止内存泄漏
+**关键技巧：** `wrapper._original = fn` 让用户能通过原始函数引用来 `off` 一个 `once` 注册的回调。
+
+### 3. 监听器数量限制 —— 内存泄漏预警
 
 ```javascript
 constructor() {
-  this._events = {};
+  this._events = Object.create(null);
   this._maxListeners = 10; // Node.js 默认值
 }
 
 on(event, fn) {
   const fns = (this._events[event] ??= []);
   fns.push(fn);
-  // 超过阈值打 warn
   if (fns.length > this._maxListeners) {
     console.warn(
-      `MaxListenersExceededWarning: Possible EventEmitter memory leak ` +
-      `detected. ${fns.length} listeners added to [${event}].`
+      `MaxListenersExceededWarning: Possible memory leak. ` +
+      `${fns.length} listeners on [${event}]`
     );
   }
   return this;
 }
-
-setMaxListeners(n) {
-  this._maxListeners = n;
-  return this;
-}
 ```
 
-### 4. 性能优化 — 单监听器时用函数而非数组
+这个警告是内存泄漏的信号——如果你不断 `on` 但从不清掉（比如组件销毁后没 `off`），回调会越堆越多。
+
+### 4. 性能优化 —— 单监听器不走数组
 
 ```javascript
 emit(event, ...args) {
   const handler = this._events[event];
   if (!handler) return false;
+
   if (typeof handler === 'function') {
-    handler(...args);   // 单监听器，直接调
+    // 只有一个监听器时，handler 是函数不是数组（Node.js 实际实现）
+    handler.apply(this, args);
   } else {
-    handler.slice().forEach(fn => fn(...args)); // slice 避免中途 off 影响遍历
+    // slice 一份再遍历，避免中途 off 导致索引错乱
+    for (const fn of handler.slice()) {
+      fn.apply(this, args);
+    }
   }
   return true;
 }
 ```
 
-**这是 Node.js EventEmitter 的实际实现细节。** 大多数事件只有一个监听器，用数组存太浪费。
+**为什么 `handler.slice()`？** 如果 `emit` 过程中某个回调 `off` 了自己，直接 `forEach` 会导致后续回调被跳过。Slice 一份再遍历，原数组被修改也不影响当前 emit。
 
 ### 5. 发布订阅 vs 观察者模式
 
 ```javascript
-// 发布订阅：通过事件中心解耦
-emitter.on('data', subscriber);
-emitter.emit('data'); // 发布者不知道订阅者是谁
+// 发布订阅：有中间层（EventEmitter），双方互不知道对方存在
+emitter.on('data', callback);  // 订阅者
+emitter.emit('data', payload);  // 发布者，不知道谁在听
 
 // 观察者模式：Subject 直接持有 Observer 列表
-subject.addObserver(observer);
-subject.notify(); // 紧耦合，Subject 知道 Observer 接口
+subject.addObserver(observer);  // 紧耦合
+subject.notify();               // Subject 知道每个 Observer 的 update 接口
 ```
 
-**面试结论：** 发布订阅有中间层（EventEmitter），耦合更松；观察者模式是直连的。
+**面试结论：** 发布订阅多一层事件通道，耦合更松；观察者直接相连，交互更明确。Vue 3 响应式是观察者，EventEmitter 是发布订阅。
 
 ## 其实你每天都在用
 
-- **Node.js 的 `http.createServer()`** 返回的对象就是 EventEmitter，`server.on('request', ...)` 就是订阅
-- **Vue 2 的 `$on` / `$emit` / `$once`** — 组件事件总线是 EventEmitter 的完美复刻
-- **WebSocket 的 `ws.on('message', ...)`** — 事件驱动的核心范式
-- **`process.on('uncaughtException', ...)`** — Node.js 全局异常捕获本质上就是事件订阅
-- **自定义事件总线解决跨组件通信** — 在没有 Vuex/Pinia 的小项目里，一个 EventEmitter 实例就能搞定
+- **Node.js `http.createServer()`** — server 对象继承自 EventEmitter，`server.on('request', handler)` 就是订阅
+- **Vue 2 的 `$on / $emit / $once`** — 组件事件总线是 EventEmitter 的完美复刻
+- **WebSocket `ws.on('message', ...)`** — 事件驱动通信的标准范式
+- **`process.on('uncaughtException', ...)`** — Node 全局异常捕获本质就是事件订阅
+- **组件通信的 EventBus** — 在没有 Pinia/Redux 的小项目里，一个 EventEmitter 实例搞定跨组件通信
 
 ## 常见误解
 
-- **❌ 误区：「emit 触发后回调是同步执行的」** 对。`emit` 是同步遍历回调数组逐一执行，不是 `setTimeout`。如果把耗时操作放在回调里，会阻塞后续回调。之所以叫「事件驱动」而不是「异步」，这是一个常见的概念混淆。
+- **❌ 误区：「emit 是异步的」** emit 是**同步**遍历回调数组逐一执行的。之所以叫"事件驱动"而不是"异步"，是个常见的认知偏差。如果在回调里做耗时操作，会阻塞后续回调。
 
-- **❌ 误区：「off 在 forEach 过程中移除元素安全」** 不安全。如果你在 `emit` 的 forEach 循环里 off 掉自己，数组在遍历中被修改，后面的回调可能被跳过。Node.js 的解决方案是 `handler.slice().forEach(...)` 复制一份再遍历。
+- **❌ 误区：「emit 过程中 off 自己完全安全」** 不安全。如果 `emit` 直接对原数组 `forEach`，中途 `off` 自己后数组索引错乱，后面的回调被跳过。解决方案是遍历前 `slice()` 一份。
 
-- **❌ 误区：「EventEmitter 就是观察者模式」** 不完全对。发布订阅模式和观察者模式的核心区别是**中间层**。观察者模式中 Subject 直接知道 Observer 是谁；发布订阅模式中双方通过 Event Channel 通信，互相不认识。
+- **❌ 误区：「maxListeners 设大就行，警告无所谓」** 这个警告是告诉你"可能有内存泄漏"。组件被销毁后忘了 `off`，事件的回调数组会无限增长——这才是危险，限制只是预警。
 
-- **❌ 误区：「maxListeners=10 设大了就行，不用管」** 这个警告是**内存泄漏的信号**。如果你的 `on` 不断往同一个事件上挂回调但从不清掉——比如组件被销毁却没 `off`——这个事件会越攒越大。限值只是一个提醒，不是解决方案。
+- **❌ 误区：「EventEmitter 就是观察者模式」** 不完全对。观察者模式中 Subject 直接知道 Observer 是谁；发布订阅通过事件通道解耦，双方互不认识。一个是直连，一个是有中间层。
 
 ## 一句话总结
 
-一个对象存事件→一个数组存回调→四个方法 CRUD——EventEmitter 的复杂度全在边界处理，掌握了 `once` 的 wrapper 技巧和 `slice` 的遍历安全，面试稳了。
+一个 Map 存事件、一个数组存回调、四个方法 CRUD——EventEmitter 本体极简，复杂度全在边界：`once` 的 wrapper 代理、`slice` 的遍历安全、`_maxListeners` 的内存预警。三关全过，面试稳了。

@@ -3,85 +3,80 @@ layout: post
 title: "TypeScript 基础类型系统"
 date: 2026-02-05
 categories: ["前端核心", "TypeScript"]
-tags: ["TypeScript", "类型系统", "基础类型", "any", "unknown", "never"]
+tags: ["TypeScript", "类型系统", "any", "unknown", "never", "面试"]
 ---
 
 ## 一句话概括
 
-TypeScript 在 JS 之上加了**静态类型层**，覆盖 string、number、boolean、array、tuple、enum、any、unknown、void、never 等基础类型——核心不是背概念，而是理解 `any` vs `unknown` 的安全取舍和 `never` 的穷尽检查价值。
+TypeScript 基础类型不是背 `string | number | boolean`——核心是三个安全支柱：用 `unknown` 锁死 any、用 `strictNullChecks` 显式化空值、用 `never` 做穷尽检查——选哪条路决定了你代码的类型安全等级。
 
 ## 核心知识点
 
 ### 1. 基础类型速览
 
 ```typescript
-// 基本类型 —— 和 JS 一一对应
+// 基本类型
 let name: string = 'TS';
 let age: number = 30;
 let done: boolean = false;
 
-// 数组 —— 两种写法，推荐第一种
+// 数组（推荐第一种写法）
 let nums: number[] = [1, 2, 3];
-let strs: Array<string> = ['a', 'b'];
 
-// 元组 —— 固定长度和类型，每个位置类型可以不同
+// 元组：固定长度 + 每位置类型独立
 let user: [string, number] = ['Alice', 30];
 user[0].toUpperCase(); // ✅ TS 知道 [0] 是 string
-// user[2];            // ❌ 越界报错
 
 // 枚举
-enum Dir { Up = 'UP', Down = 'DOWN' }
-const d: Dir = Dir.Up;
+enum Status { Pending = 'PENDING', Success = 'SUCCESS' }
 ```
 
-### 2. any vs unknown — 类型安全的岔路口
+### 2. any vs unknown — 天差地别
 
 ```typescript
-// any：完全放弃检查，自求多福
+// any：放弃全部检查，等于回退到 JS
 let a: any = 'hello';
-a = 42;                  // ✅
-a.nonExistentMethod();   // ✅ 编译通过，运行崩溃
-let s1: string = a;      // ✅ any 可以赋值给任何类型
+a.nonExistentMethod(); // ✅ 编译通过，运行 💥
+let s: string = a;     // ✅ any 污染一切
 
-// unknown：类型安全的 any —— 必须先收窄
+// unknown：安全的 any —— 必须收窄才能用
 let u: unknown = 'hello';
-u = 42;                  // ✅ 可以接收任何值
-// u.toFixed();          // ❌ 不能直接使用
-// let s2: string = u;   // ❌ 不能直接赋值
+// u.toUpperCase();    // ❌ 不能直接用
+// let s: string = u;  // ❌ 不能直接赋值
 
-// ✅ 必须收窄后才能用
-if (typeof u === 'number') {
-  u.toFixed(2);          // OK，这里 u 是 number
-  let n: number = u;     // OK
+// ✅ 收窄后使用
+if (typeof u === 'string') {
+  u.toUpperCase();           // OK
+  const s: string = u;       // OK
+}
+
+// unknown 的最佳实践：API 返回值先用 unknown 接
+const data: unknown = await fetch('/api').then(r => r.json());
+if (typeof data === 'object' && data !== null && 'code' in data) {
+  // 这里 data 被收窄为你预期的形状
 }
 ```
 
 **铁律：** 不知道类型的时候用 `unknown` 而不是 `any`。`unknown` 逼你在使用前做类型守卫，`any` 是闭眼跳悬崖。
 
-### 3. void vs never — 无返回值 vs 永远不返回
+### 3. void vs never — 无返回 vs 永远不返回
 
 ```typescript
-// void：函数没有返回值（或返回 undefined）
-function log(msg: string): void {
-  console.log(msg);
-}
+// void：函数不返回有意义的值（或返回 undefined）
+function log(msg: string): void { console.log(msg); }
 
 // never：函数永远不会正常结束
-function fail(msg: string): never {
-  throw new Error(msg);       // 抛异常
-}
-function loop(): never {
-  while (true) {}             // 死循环
-}
+function throwErr(msg: string): never { throw new Error(msg); }
+function infiniteLoop(): never { while (true) {} }
 
-// never 的杀手应用：穷尽检查
+// never 的杀手级应用：穷尽检查
 type Shape = 'circle' | 'square';
 function area(s: Shape): number {
   switch (s) {
     case 'circle': return Math.PI;
     case 'square': return 1;
     default: {
-      // 如果 Shape 新增了 'triangle'，这里 s 不再是 never，编译报错
+      // 如果 Shape 新增 'triangle'，s 的类型变成 'triangle'，不是 never → 编译报错
       const _exhaustive: never = s;
       return _exhaustive;
     }
@@ -89,57 +84,62 @@ function area(s: Shape): number {
 }
 ```
 
-### 4. null / undefined 与 strictNullChecks
+`never` 的穷尽检查是 TS 最被低估的功能——联合类型新增成员时，编译期就能发现问题。
+
+### 4. strictNullChecks — 必开的选项
 
 ```typescript
-// strictNullChecks 关闭时（不推荐）：null/undefined 可以赋给任何类型
-// let name: string = null;  // ⚠️ 通过，但不安全
+// strictNullChecks: false（不推荐）
+let name: string = null; // ✅ 通过，但不安全
 
-// strictNullChecks 开启时（强烈推荐）：
-let name: string = null;         // ❌
-let name2: string | null = null; // ✅ 显式联合
+// strictNullChecks: true（推荐）
+let name: string = null;  // ❌ 类型错误
+let name2: string | null = null; // ✅ 显式联合类型
 
-// 可选属性 = 自动加 | undefined
+// 可选属性自动带 undefined
 interface User {
   name: string;
-  age?: number;  // 等价于 age: number | undefined
+  age?: number; // 等价于 age: number | undefined
 }
 ```
 
-### 5. 类型推断 vs 显式注解
+所有新项目都应该开 `strict: true`，里面包含了 `strictNullChecks`。
+
+### 5. 类型推断原则
 
 ```typescript
-// ✅ 推断够了 —— 不用多写
-let n = 42;           // number
-let s = 'hello';      // string
-let arr = [1, 2, 3];  // number[]
+// ✅ 能推断的就别写
+let count = 0;        // TS 推断 number
+let names = ['a'];    // TS 推断 string[]
 
-// ✅ 必须显式注解 —— 函数参数
+// ✅ 必须显式注解的地方：函数参数
 function add(a: number, b: number): number {
   return a + b;
 }
 
-// 原则：能推断的别写，函数签名必须写
+// ✅ 对象字面量最好标类型（方便后续重构）
+interface User { name: string; age: number }
+const user: User = { name: 'Alice', age: 30 };
 ```
 
 ## 其实你每天都在用
 
-- **API 返回值类型定义**：`interface ApiResponse<T> { code: number; data: T }` 让后端返回的数据结构一目了然
-- **React useState 的类型推断**：`const [count, setCount] = useState(0)` 自动推断 `number`
-- **表单校验**：`function validate(val: unknown): boolean` 用 unknown 接用户输入，再通过 typeof 收窄
-- **事件处理**：`onChange={(e: React.ChangeEvent<HTMLInputElement>) => ...}` 精确到具体元素类型
-- **配置常量枚举**：`enum Env { Dev, Prod }` 避免代码中散布魔法字符串 `'dev' / 'prod'`
+- **API 响应类型**：`interface ApiRes<T> { code: number; data: T }` — 后端返回什么结构一目了然
+- **useState 类型推断**：`const [count, setCount] = useState(0)` — TS 自动推断 `number`
+- **表单输入收窄**：`function validate(val: unknown): val is string` — 用类型守卫从 unknown 收窄
+- **事件处理**：`onChange={(e: ChangeEvent<HTMLInputElement>) => ...}` — 精确到元素类型
+- **配置常量枚举**：`enum Env { Dev, Prod }` — 消灭魔法字符串
 
 ## 常见误解
 
-- **❌ 误区：「TS 就是给 JS 加冒号」** TypeScript 的类型系统远比"加冒号"复杂——它支持字面量类型、联合类型、条件类型、模板字面量类型等。基础类型只是入门第一课，真正的力量在高级类型体操里。
+- **❌ 误区：「TS 就是 JS + 冒号」** TypeScript 的类型系统有字面量类型、联合/交叉/条件/映射类型、递归类型——基础类型只是入门第一课。真正的力量在类型体操里。
 
-- **❌ 误区：「any 用着方便，先 any 后补类型」** 这是最常见的 TS 反模式。`any` 有"传染性"——一个 any 变量传给函数后，返回值也变 any，类型安全雪崩式丢失。正确做法是用 `unknown` 或显式写 `// TODO: type this` 标记。
+- **❌ 误区：「any 方便，先 any 后面再补」** any 有**传染性**——一个 any 变量传给函数后，返回值也变 any，类型安全雪崩式扩散。正确做法：用 `unknown`，或显式写 `// @ts-expect-error 待定`。
 
-- **❌ 误区：「void 和 undefined 是一回事」** 作为返回值类型：`void` 表示"我不关心返回值"（回调即使 return 了东西也被忽略）；`undefined` 表示"必须显式 return undefined"。作为变量类型：`void` 变量只能赋值 `undefined`（strict 下），本质区别在于语义约束。
+- **❌ 误区：「void 和 undefined 一回事」** 当返回值类型时：`void` 表示"我不关心返回值"（即使回调里 return 了东西也被忽略）；`undefined` 表示"必须显式 return undefined"。当变量类型时：`void` 变量只能赋值 `undefined`（strict 下），但语义上表示"不应该被使用"。
 
-- **❌ 误区：「never 就是个理论概念，实际用不上」** `never` 最实用的场景是**穷尽检查**（exhaustive check）。当你的联合类型新增了一个成员，如果所有处理分支都覆盖了，default 分支里的变量会被 TS 收窄为 `never`——一旦新增类型没覆盖，default 分支的类型就不是 `never` 了，编译直接报错。
+- **❌ 误区：「never 是理论概念，实际用不上」** never 最实际的用途是穷尽检查——联合类型加新成员但没覆盖所有分支时编译直接报错。这是类型系统给你的免费 bug 检测器。
 
 ## 一句话总结
 
-TypeScript 基础类型的核心不是记住 12 种类型名，而是理解 three type safety pillars：用 `unknown` 替代 `any`、用 `strictNullChecks` 显式化空值、用 `never` 做穷尽检查——类型系统的安全等级由你选择。
+TypeScript 的三道安全锁：`unknown` 堵住 any 的口子，`strictNullChecks` 让空值无处隐藏，`never` 替你做穷尽检查——类型系统的安全感，来自你的选择。
