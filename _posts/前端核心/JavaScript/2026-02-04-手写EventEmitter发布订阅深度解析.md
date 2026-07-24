@@ -61,7 +61,7 @@ off(event, fn) {
 }
 ```
 
-**核心技巧：** `wrapper._original = fn` 建立包装函数到原始函数的桥——`emitter.off('click', fn)` 不管 `fn` 是 `on` 的还是 `once` 的，都能精准命中。
+**核心技巧：** `wrapper._original = fn` 建立包装函数到原始函数的桥——`emitter.off('click', fn)` 不管 `fn` 是 `on` 的还是 `once` 的，都能精准命中。这是面试官最爱追问的细节。
 
 ### 3. 遍历安全——`slice()` 保命
 
@@ -80,7 +80,7 @@ emit(event, ...args) {
 
 **坑在哪：** 回调 A 里调了 `off('event', B)` → 回调数组变成 `[A, C]` → 遍历器在原数组上继续走 → 索引 1 现在是 C 但遍历器以为到了 B → C 被**静默跳过**。
 
-`slice()` 拷贝一份 → 原数组随便被 callback 改，遍历器永远走的是那一刻的快照。
+`slice()` 拷贝一份 → 原数组随便被 callback 改，遍历器永远走的是那一刻的快照。这是"事件循环里删除监听器"场景下的经典 bug。
 
 ### 4. 最大监听数——内存泄漏预警
 
@@ -100,7 +100,7 @@ on(event, fn) {
 }
 ```
 
-警告是信号：组件卸载没 `off` → 回调数组无限增长 → 闭包引用的 DOM / 数据全被 EventEmitter 死抓着不放。
+警告是信号：组件卸载没 `off` → 回调数组无限增长 → 闭包引用的 DOM / 数据全被 EventEmitter 死抓着不放。Node.js 原生 EventEmitter 默认也是 10 个。
 
 ### 5. 发布订阅 vs 观察者——面试必问
 
@@ -115,26 +115,26 @@ subject.notify();       // subject 直接调 obs.update()
 
 // 差异：
 // 发布订阅 = 松耦合（通过事件名交互），代表：EventEmitter、EventBus
-// 观察者   = 紧耦合（Subject 认识每个 Observer），代表：Vue 响应式、MutationObserver
+// 观察者   = 紧耦合（Subject 认识每个 Observer），代表：Vue 响应式（Dep→Watcher）、MutationObserver
 ```
 
 ## 其实你每天都在用
 
 - **Node.js `http.createServer()`**：server 继承 EventEmitter，`server.on('request', handler)` 就是发布订阅
-- **Vue 2 `$on / $emit / $once`**：EventEmitter 直接复刻，Vue 3 弃用但在 mitt 里重生
+- **Vue 2 `$on / $emit / $once / $off`**：EventEmitter 直接复刻，Vue 3 弃用但在 mitt（200 字节）里重生
 - **WebSocket `ws.on('message', cb)`**：事件驱动通信的标准范式
 - **`process.on('uncaughtException')`**：Node 全局异常捕获就是事件订阅
 - **微前端通信**：跨子应用的全局事件总线底层就是 EventEmitter
 
 ## 常见误解
 
-- **❌ 误区：「emit 是异步的」** emit **完全同步**——遍历回调逐个立即执行。回调里做耗时操作会阻塞后续回调。`process.nextTick` 或 `Promise.resolve()` 不在 emit 的实现里。
+- **❌ 误区：「emit 是异步的」** emit **完全同步**——遍历回调逐个立即执行。回调里做耗时操作会阻塞后续回调。如果需要异步调度，在回调里自己用 `Promise.resolve()` 或 `process.nextTick`——它不在 emit 的实现里。
 
-- **❌ 误区：「emit 里 off 自己不碍事」** 直接对原数组遍历时 `off` 自己 → 数组长度变了 → 索引错乱 → 后续回调静默跳过。解法：`fns.slice()` 快照遍历。
+- **❌ 误区：「emit 里 off 自己不碍事」** 直接对原数组遍历时 `off` 自己 → 数组长度变了 → 索引错乱 → 后续回调静默跳过。解法：`fns.slice()` 快照遍历。这个细节 Node.js 原生 EventEmitter 也用了同样技巧。
 
-- **❌ 误区：「maxListeners 设大就行」** 掩耳盗铃。警告告诉你"有内存泄漏风险"——组件销毁忘 `off`，回调连带着闭包数据全被死抓着。治本：`unmount` 时清掉所有监听。
+- **❌ 误区：「maxListeners 设大就行」** 掩耳盗铃。警告告诉你"有内存泄漏风险"——组件销毁忘 `off`，回调连带着闭包数据全被死抓着。治本：`unmount`/`destroy` 时清掉所有监听。
 
-- **❌ 误区：「EventEmitter 就是观察者模式」** 差一个中间层。观察者的 Subject 直接知道谁在 watch 它；发布订阅的双方通过事件名交互，不直接持有对方引用。前者紧耦合交互明确，后者松耦合灵活。
+- **❌ 误区：「EventEmitter 就是观察者模式」** 差一个中间层。观察者的 Subject 直接知道谁在 watch 它（如 Vue 的 Dep 维护 Watcher 列表）；发布订阅的双方通过事件名交互，不直接持有对方引用。前者紧耦合交互明确，后者松耦合灵活——选择在于你想要的耦合度。
 
 ## 一句话总结
 

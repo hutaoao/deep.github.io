@@ -20,12 +20,13 @@ let name: string = 'TS';
 let age: number = 30;
 let done: boolean = false;
 
-// 数组（推荐 T[] 写法）
+// 数组（推荐 T[] 写法，简洁统一）
 const nums: number[] = [1, 2, 3];
 
 // 元组：固定长度 + 每位置类型独立
 const user: [string, number] = ['Alice', 30];
 user[0].toUpperCase(); // ✅ TS 知道索引 0 是 string
+// user.push(true); // ❌ TS 4.2+ 元组限制变长操作
 
 // 枚举
 enum Status { Pending, Success, Fail }        // 数字枚举（自增）
@@ -51,17 +52,17 @@ if (typeof u === 'string') {
   u.toUpperCase();    // ✅ 收窄后安全
 }
 
-// 最佳实践：API 返回用 unknown 接
+// 最佳实践：API 返回用 unknown 接，然后类型守卫收窄
 const raw: unknown = await fetch('/api/user').then(r => r.json());
 // 不校验就用 → 编译报错；校验后再用 → 类型安全
 ```
 
-**铁律：** 不确定类型用 `unknown`——它逼你做类型守卫。`any` 是甩手掌柜——它不光自己裸奔，还感染所有跟它沾边的变量。
+**铁律：** 不确定类型用 `unknown`——它逼你做类型守卫。`any` 是甩手掌柜——它不光自己裸奔，还感染所有跟它沾边的变量。ESLint 配 `no-explicit-any` 是最低安全基准。
 
 ### 3. void vs never——别混为一谈
 
 ```ts
-// void：函数不返回有意义的值
+// void：函数不返回有意义的值（返回了也不关心）
 function log(msg: string): void { console.log(msg); }
 
 // never：函数永远**不会**正常结束
@@ -78,7 +79,7 @@ function area(s: Shape): number {
     case 'triangle': return 0.5;
     default: {
       // 所有 case 覆盖完了 → s 类型为 never → 编译通过
-      // 未来新增 'rectangle' → s 变成 'rectangle' → 编译报错！
+      // 未来新增 'rectangle' → s 变成 'rectangle' → 编译报错（Type 'string' is not assignable to type 'never'）！
       const _exhaustive: never = s;
       return _exhaustive;
     }
@@ -103,7 +104,7 @@ interface User {
 }
 ```
 
-**直接开 `"strict": true`**——它包含 `strictNullChecks` + `strictFunctionTypes` + 四个子选项，是 TypeScript 类型安全的基础设施。
+**直接开 `"strict": true`**——它包含 `strictNullChecks` + `strictFunctionTypes` + 四个子选项，是 TypeScript 类型安全的基础设施。新项目不开 strict 等于花钱请保镖却不让他带武器。
 
 ### 5. 何时写类型注解
 
@@ -112,7 +113,7 @@ interface User {
 let count = 0;               // TS 推断 number
 const names = ['a', 'b'];    // TS 推断 string[]
 
-// ✅ 必须写：函数参数
+// ✅ 必须写：函数参数（TS 的 noImplicitAny 会报）
 function add(a: number, b: number): number { return a + b; }
 
 // ✅ 建议写：对象字面量（便于重构和 IntelliSense）
@@ -120,25 +121,25 @@ interface User { name: string; age: number }
 const user: User = { name: 'Alice', age: 30 };
 ```
 
-**原则：** 让 TS 做推断，你在**边界**写类型——函数签名、API 接口、导出的公共方法。
+**原则：** 让 TS 做推断，你在**边界**写类型——函数签名、API 接口、导出的公共方法。类型注解是给"读者"看的，不是给 TS 看的。
 
 ## 其实你每天都在用
 
 - **`useState` 自动推断**：`const [count, setCount] = useState(0)` → TS 自动 `number`
 - **API 响应泛型**：`interface ApiRes<T> { code: number; data: T }` → 一份定义复用所有接口
-- **事件处理精确类型**：`onClick={(e: React.MouseEvent) => {}}` → 精确到 DOM 元素
-- **`never` 穷尽检查**：Redux reducer 的 `default: const _: never = action` → 漏 case 编译报
-- **类型守卫收窄**：`if (typeof input === 'string') { input.toLowerCase() }` → TS 自动收窄
+- **事件处理精确类型**：`onClick={(e: React.MouseEvent) => {}}` → 精确到 DOM 元素，`e.target` 类型正确
+- **`never` 穷尽检查**：Redux reducer 的 `default: const _: never = action` → 漏 case 编译报，CI 拦截
+- **类型守卫收窄**：`if (typeof input === 'string') { input.toLowerCase() }` → TS 自动收窄，无需 as
 
 ## 常见误解
 
-- **❌ 误区：「any 方便，之后再补类型」** any 有**传染性**——`fn(anyValue)` 的返回值也变 any，污染雪崩式扩散。正确姿势：`unknown` + 类型守卫，或用 `// @ts-expect-error` 明确标注临时绕过。
+- **❌ 误区：「any 方便，之后再补类型」** any 有**传染性**——`fn(anyValue)` 的返回值也变 any，污染雪崩式扩散。正确姿势：`unknown` + 类型守卫，或用 `// @ts-expect-error` 明确标注临时绕过（带说明，下一行编译通过说明你预期错了会报警）。
 
 - **❌ 误区：「TypeScript 就是 JS + 冒号类型注解」** 基础类型只是冰山一角。TS 的类型系统有泛型、条件类型、映射类型、模板字面量类型、递归类型——它的表达能力接近一个完整的类型编程语言。
 
 - **❌ 误区：「void 和 undefined 是一回事」** 返回值语义：`void` 表示"不关心返回值"（回调里 return 了也会被忽略），`undefined` 表示"必须返回或隐式返回 undefined"。变量语义：`void` 变量只能赋 `undefined`，但它表示"不该被使用"。
 
-- **❌ 误区：「never 太抽象，实际用不到」** `never` 的穷尽检查是类型系统给你的**免费 bug 检测器**。联合类型加新成员 → 忘加新 case → **编译直接报错**，CI 阶段就拦截，不用等到线上炸。
+- **❌ 误区：「never 太抽象，实际用不到」** `never` 的穷尽检查是类型系统给你的**免费 bug 检测器**。联合类型加新成员 → 忘加新 case → **编译直接报错**，CI 阶段就拦截，不用等到线上炸。Redux 社区里这是标准模式。
 
 ## 一句话总结
 

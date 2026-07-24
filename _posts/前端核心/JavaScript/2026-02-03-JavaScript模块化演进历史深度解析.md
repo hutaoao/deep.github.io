@@ -54,7 +54,7 @@ define('myModule', ['jquery', 'lodash'], ($, _) => ({
 require(['myModule'], my => my.init());
 ```
 
-**解决了：** 浏览器异步加载——并行下载依赖，不卡渲染。**代价：** 每个模块一层 `define` callback，嵌套多了像剥洋葱。
+**解决了：** 浏览器异步加载——并行下载依赖，不卡渲染。**代价：** 每个模块一层 `define` callback，嵌套多了像剥洋葱。这也是后来被 CMD（Sea.js）挑战的根源——CMD 推崇"用的时候再 require"，写起来更接近直觉但并行性能不如 AMD。
 
 ### 4. UMD——一个文件通吃所有环境（过渡期产物）
 
@@ -70,7 +70,7 @@ require(['myModule'], my => my.init());
 })(this, ($) => { /* 业务逻辑 */ });
 ```
 
-Lodash、Moment.js 等老牌库的源码文件头几乎全是这个套路——运行时检测环境选格式。今天新库基本只输出 ESM，UMD 已进博物馆。
+Lodash、Moment.js 等老牌库的源码文件头几乎全是这个套路——运行时检测环境选格式。今天新库基本只输出 ESM，UMD 已进博物馆，但看老库源码时你还得认识它。
 
 ### 5. ES Module——语言级别的标准答案（ES2015+）
 
@@ -86,7 +86,7 @@ const LazyPage = await import('./heavy.js');
 |---|---|---|
 | IIFE | 封装（不再全局污染） | 依赖顺序靠人工排 |
 | CJS | 依赖关系图 | 同步加载不适合浏览器 |
-| AMD | 浏览器异步 | 写法啰嗦 |
+| AMD | 浏览器异步 | 写法啰嗦，嵌套像洋葱 |
 | UMD | 格式兼容 | 运行时判断 + 代码冗余 |
 | ESM | 静态分析 + 浏览器原生 | Node 端兼容过渡期长 |
 
@@ -97,6 +97,7 @@ const LazyPage = await import('./heavy.js');
 - **Webpack `__webpack_require__`**：在浏览器里山寨了一套 CJS 运行时
 - **Babel / tsc 转译**：你写的是 ESM，Node 里实际跑的是被转成 CJS 的代码
 - **`import()` 代码分割**：每次写路由懒加载，底层都是动态 import 在切 chunk
+- **React Server Components**：RSC 的文件顶部 `'use client'` 指令本质上是模块边界标记，继承了 ESM 的静态分析基因
 
 ## 常见误解
 
