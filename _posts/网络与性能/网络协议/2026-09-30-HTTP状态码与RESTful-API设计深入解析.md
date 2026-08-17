@@ -3,7 +3,7 @@ layout: post
 title: "HTTP状态码与RESTful API设计深入解析"
 date: 2026-09-30 00:00:00 +0800
 categories: ["网络与性能", "网络协议"]
-tags: [HTTP状态码, RESTful, API设计, 301, 304, 幂等性]
+tags: [HTTP状态码, RESTful, API设计, "301", "304", 幂等性]
 description: >
   HTTP 状态码是服务器处理结果的"标准化三位数字"，RESTful 是用 HTTP 语义表达资源的设计风格。
   看到 201 就知道创建成功、看到 401 就知道没登录——状态码本身就是接口文档。面试必考。
