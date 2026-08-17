@@ -162,7 +162,7 @@ function myAny(iterable) {
 
 **⑤ 表单多字段校验。** 用户名/手机号/邮箱三个异步校验，任何一个失败就阻止提交 → `Promise.all`。
 
-## 常见误解
+## 常见误解（FAQ）
 
 **❌ 误区：`Promise.all` 里一个 reject，其他 Promise 会自动取消。**
 

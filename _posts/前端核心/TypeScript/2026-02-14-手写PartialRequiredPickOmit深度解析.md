@@ -97,7 +97,7 @@ type RequiredByKeys<T, K extends keyof T> =
   Omit<T, K> & Required<Pick<T, K>>;
 ```
 
-## 「其实你每天都在用」
+## 其实你每天都在用
 
 1. **`Partial<User>`** — 编辑表单，只传用户改了的字段，其余字段后端用原值
 2. **`Pick<User, "id" | "name">`** — 列表页只拿展示需要的字段，避免网络传输浪费

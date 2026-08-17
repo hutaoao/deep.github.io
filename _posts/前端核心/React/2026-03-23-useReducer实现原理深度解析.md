@@ -108,7 +108,7 @@ const [state, dispatch] = useReducer(reducer, 0, init);
 - **撤销/重做**：reducer 是纯函数，天然支持 `{ past, present, future }` 三栈结构实现 undo/redo
 - **useState 本身就是在用 useReducer**：`setCount(5)` 底层就是 `dispatch(5)`，`setCount(c => c + 1)` 就是 `dispatch(c => c + 1)`
 
-## 常见误解
+## 常见误解（FAQ）
 
 - **❌ 误区：「useReducer 就是微型 Redux」** 不完全。useReducer 管理的是组件局部状态，Redux 管理的是全局单一状态树。useReducer 没有中间件、没有 DevTools 时间旅行、没有跨组件共享能力。
 

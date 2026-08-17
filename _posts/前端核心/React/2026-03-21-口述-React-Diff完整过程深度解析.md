@@ -104,7 +104,7 @@ function mountChildFibers(...) {
 - **搜索过滤**：`items.filter(...)` 结果变小，第一轮匹配几个后新节点用完 → 剩余旧节点全删（不进入第二轮，走出口判断快车道）
 - **key 是 ID vs key 是 index**：用数据库 ID 做 key，Map 能精确匹配到对应旧节点；用 index 做 key 删除中间项后所有后续项内容全错位
 
-## 常见误解
+## 常见误解（FAQ）
 
 - **❌ 误区：「Diff 每次都要走完三轮」** 不是。末尾追加、末尾删除这些场景第一轮就走到底了（oldFiber 或 newElement 用完），直接走出口判断跳过二三两轮。
 

@@ -173,7 +173,7 @@ console.log(p instanceof Person)  // true
 
 **原理**：`new bound()` 创建对象 obj，obj 的原型指向 `bound.prototype`，而 `bound.prototype` 是 `new fNOP()` 的实例，所以 `obj instanceof fNOP` 为 true。普通调用 `bound()` 时 this 不继承 fNOP.prototype，所以走 bound 的 context。
 
-## 「其实你每天都在用」
+## 其实你每天都在用
 
 - **搜索框输入联想** — 你打「苹」字后停了 300ms，防抖触发一次请求 → 返回「苹果、苹果手机、苹果醋」。打字快时不发请求
 - **窗口 resize 重算布局** — 拖窗口时 resize 事件每秒触发几十次，节流让它每 200ms 才跑一次重算，否则画面像 PPT
@@ -181,7 +181,7 @@ console.log(p instanceof Person)  // true
 - **滚动加载更多** — 列表无限滚动，节流每 200ms 检查一次「是否滚到底」，而不是每像素都触发数据请求
 - **call/apply 的隐式使用** — 你写的 `Math.max(...arr)` 没用 apply，但 Babel 编译后的 ES5 代码是 `Math.max.apply(Math, arr)`
 
-## 常见误解
+## 常见误解（FAQ）
 
 **❌ 误区：「debounce 返回箭头函数就能自动绑定 this」**
 

@@ -105,7 +105,7 @@ const config = deepFreeze({ server: { host: 'localhost', port: 3000 } });
 - **前端常量配置：** `const CONFIG = deepFreeze({ api: { baseUrl: '...' } })` 告别全局污染
 - **React.memo 配合使用：** 只读类型让开发者不敢直接 mutate props，只能用不可变更新
 
-## 常见误解
+## 常见误解（FAQ）
 
 - **❌ 误区：「`Readonly` 够了」** `Readonly` 只浅层。五层嵌套对象只有第一层被保护，剩下 80% 的属性照改不误。嵌套超过一层就必须 `DeepReadonly`。
 

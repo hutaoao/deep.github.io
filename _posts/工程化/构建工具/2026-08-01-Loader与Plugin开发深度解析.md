@@ -150,7 +150,7 @@ class SimpleAnalyzerPlugin {
 4. **CSS Modules 的 `:local(.title)` 编译为 `.title_abc123`**——`css-loader` 的 `modules` 选项在代码生成阶段做类名哈希，同时导出 `{ title: 'title_abc123' }` 给 JS。你写的 `styles.title` 能工作，全靠這個 loader。
 5. **CI 构建后自动上传 source map 到 Sentry**——`@sentry/webpack-plugin` 在 `compiler.hooks.done`（或 `afterEmit`）阶段把生成的 `.map` 文件上传，不影响构建流程本身。这是 Plugin 模式的标准应用：构建完成 → 副作用。
 
-## 常见误解
+## 常见误解（FAQ）
 
 - **❌ 误区：「Loader 和 Plugin 选哪个取决于个人喜好」**
   真相：职责完全不同。Loader 处理**单个文件**的内容转换（把 `.ts` 变成 `.js`），Plugin 处理**构建流程**的扩展（生成额外文件、修改 asset、注入变量）。一个判断标准：如果你的逻辑需要来自多个模块的信息（如"所有 chunk 的总大小"），那就不是 loader 能做、必须是 plugin。

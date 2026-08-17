@@ -110,7 +110,7 @@ const result = NativeModules.NewStorage.get('key') // 调用即返回
 // 避免事件风暴和 JS 侧未初始化导致的丢事件问题
 ```
 
-## 「其实你每天都在用」
+## 其实你每天都在用
 
 1. **`useNativeDriver: true` 的动画就是新架构理念的预演** — 动画计算完全不经过 JS 线程，直接在原生线程跑，这正是 Fabric 想对所有渲染做的事
 2. **React 的 concurrent mode 和 Fabric 的原子提交思路一致** — 都在做"攒一批变更，一次性提交"，减少中间状态的无效渲染

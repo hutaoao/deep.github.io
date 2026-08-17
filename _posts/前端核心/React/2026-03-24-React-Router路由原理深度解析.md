@@ -111,7 +111,7 @@ function Editor() {
 - **嵌套布局复用**：`<Route path="dashboard" element={<Layout/>}><Route path="settings" element={<Settings/>}/></Route>` → 切换子路由时 Layout 组件不销毁，只换 Outlet 内容
 - **路由传参**：`/user/:id` → `useParams()` 拿到 `{ id: '42' }`，比 query string 更 RESTful
 
-## 常见误解
+## 常见误解（FAQ）
 
 - **❌ 误区：「HashRouter 也能服务端渲染」** 不能。# 后面的内容不会发送给服务端，服务端永远只看到根路径。SSR 必须用 BrowserRouter。
 

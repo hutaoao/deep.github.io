@@ -132,7 +132,7 @@ function commitRoot(root) {
 
 commit 必须一口气干完——因为操作的是真实 DOM，中断会让用户看到半更新的页面。
 
-## 「其实你每天都在用」
+## 其实你每天都在用
 
 1. **setState 不立即更新 DOM**：它只是创建一个 Update 对象挂到 fiber 的 lane 上，真正的 DOM 变更在 commit 阶段统一生效。
 
@@ -144,7 +144,7 @@ commit 必须一口气干完——因为操作的是真实 DOM，中断会让用
 
 5. **Profiler 中的灰色块**：Chrome Performance 面板里 React 渲染间的空白，是时间切片让出的空闲时间。
 
-## 常见误解 (FAQ)
+## 常见误解（FAQ）
 
 **❌ 误区 1："render 阶段就更新了 DOM"**
 

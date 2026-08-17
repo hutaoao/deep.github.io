@@ -115,7 +115,7 @@ const UserProfile = () => import(/* webpackChunkName: "user" */ './UserProfile.v
 
 Vite/Rollup 里 `/* webpackChunkName */` 不生效，用文件路径自动命名。懒加载后的组件在首次访问前完全不加载，是首屏性能优化的第一刀。
 
-## 「其实你每天都在用」
+## 其实你每天都在用
 
 1. **登录拦截**：`router.beforeEach` 检查 token，没登录跳 `/login`——几乎是每个后台系统的第一个功能。
 2. **面包屑导航**：`route.matched` 拿到层级路由记录数组，渲染 `首页 > 用户管理 > 编辑`。

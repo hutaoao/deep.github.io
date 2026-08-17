@@ -125,7 +125,7 @@ function Parent() {
 - **固定回调传给子组件**：`useCallback(() => toggleItem(id), [id])` 保证 `React.memo` 的列表项不会因为其他 item 的变化而重渲染
 - **useEffect 的依赖**：`useEffect(() => { fetch(id) }, [fetchWithId])` 如果不用 useCallback 包，fetchWithId 每次变 → effect 死循环
 
-## 常见误解
+## 常见误解（FAQ）
 
 - **❌ 误区：「所有函数都应该用 useCallback 包一层」** 错。useCallback 本身也有开销（定位 Hook 链表 + 比较依赖数组），对于不传给子组件的普通函数反而拖慢性能。
 

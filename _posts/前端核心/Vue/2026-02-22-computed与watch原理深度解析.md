@@ -106,7 +106,7 @@ watch(searchQuery, async (newQ, oldQ, onCleanup) => {
 - **表单联动：** 选省份 → watch 省份 ref → 自动请求该省城市列表
 - **echarts 图表响应：** `watchEffect(() => chart.setOption(buildOption(data.value)))` —— 数据变图表自动更新
 
-## 常见误解
+## 常见误解（FAQ）
 
 - **❌ 误区：「computed 每次访问都重新计算」** 只有 `_dirty === true` 时才计算。模板里用三次 `{ { doubleCount } }` 只算一次——第一次 dirty→计算→关 dirty，后两次直接读缓存。
 

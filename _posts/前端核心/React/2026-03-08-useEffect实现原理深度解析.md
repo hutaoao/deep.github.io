@@ -119,7 +119,7 @@ useLayoutEffect(() => {
 }, [])
 ```
 
-## 「其实你每天都在用」
+## 其实你每天都在用
 
 1. **数据请求**：`useEffect(() => { fetchData() }, [userId])`，userId 变化自动重新请求。
 2. **事件监听**：`useEffect(() => { window.addEventListener('scroll', fn); return () => window.removeEventListener('scroll', fn) }, [])`。

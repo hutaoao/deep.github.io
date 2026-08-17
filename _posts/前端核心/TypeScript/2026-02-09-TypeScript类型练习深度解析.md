@@ -165,7 +165,7 @@ function render<T>(state: AsyncState<T>): string {
 }
 ```
 
-## 「其实你每天都在用」
+## 其实你每天都在用
 
 1. **API 响应处理**：`if (res.code === 0) { res.data.items.map(...) }` — `res.data` 的类型根据 code 窄化
 2. **React `useState`**：`useState<User | null>(null)` — 紧跟状态的泛型保证 getter/setter 类型一致

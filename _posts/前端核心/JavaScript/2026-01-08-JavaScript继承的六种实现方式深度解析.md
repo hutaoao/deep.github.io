@@ -124,7 +124,7 @@ console.log(c1 instanceof Parent);   // true
 
 ---
 
-## 「其实你每天都在用」
+## 其实你每天都在用
 
 **1. React 类组件继承 `React.Component`**
 

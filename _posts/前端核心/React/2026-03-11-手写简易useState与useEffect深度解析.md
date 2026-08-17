@@ -136,7 +136,7 @@ function commitRoot(finishedWork) {
 
 mount 时没有 alternate → 创建全新节点。update 时 alternate 存在 → 复用并只更新可变字段，大幅减少 GC。
 
-## 「其实你每天都在用」
+## 其实你每天都在用
 
 1. **`useState` 返回的 `setState` 引用永远不变**：`queue.dispatch` 在 mount 时绑定到 `bind(null, fiber, queue)`，后续直接复用，所以不需要放在依赖数组。
 
@@ -148,7 +148,7 @@ mount 时没有 alternate → 创建全新节点。update 时 alternate 存在 �
 
 5. **依赖比较用的 `Object.is`**：你传给 `useMemo` 的依赖数组，React 用 `Object.is` 逐个比较，这和 Redux 的 `shallowEqual` 不一样。
 
-## 常见误解 (FAQ)
+## 常见误解（FAQ）
 
 **❌ 误区 1："React 内部用数组存 Hook 状态"**
 

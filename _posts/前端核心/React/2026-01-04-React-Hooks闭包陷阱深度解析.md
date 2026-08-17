@@ -203,7 +203,7 @@ function DataFetcher({ userId }) {
 
 `userId` 变化 → 执行上次清理（那次 `cancelled` 变 true）→ 再执行新 effect。闭包隔离的正确用法。
 
-## 常见误解 FAQ
+## 常见误解（FAQ）
 
 **❌ 误区一："useEffect 加空依赖就一定有问题"**
 

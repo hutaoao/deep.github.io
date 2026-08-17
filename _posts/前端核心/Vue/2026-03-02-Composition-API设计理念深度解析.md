@@ -103,7 +103,7 @@ const { x, y } = useMouse()
 - **Options API**：简单展示组件（< 100 行）、团队刚从 Vue 2 迁移
 - 两者**可以共存**，Vue 3 不强制二选一。但官方文档和生态库（Pinia、VueUse）已经全面转向 Composition API。
 
-## 「其实你每天都在用」
+## 其实你每天都在用
 
 1. **封装 API 请求逻辑**：`useRequest` 组合 loading/error/data 三态，省去每个组件里手动管理这三件事。
 2. **表单校验**：`useForm` 组合字段值、校验规则、错误信息，比散在 `data` + `methods` + `watch` 干净十倍。

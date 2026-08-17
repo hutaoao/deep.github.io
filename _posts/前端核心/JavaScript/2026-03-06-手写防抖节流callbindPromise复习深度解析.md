@@ -179,7 +179,7 @@ MyPromise.race = (promises) => new MyPromise((resolve, reject) => {
 })
 ```
 
-## 「其实你每天都在用」
+## 其实你每天都在用
 
 1. **搜索联想**：搜狗输入框的 suggest API，用户每敲一个字母就 debounce 一次。
 2. **滚动加载更多**：Scroll 事件 throttle 到每 200ms 检查是否滚到底。

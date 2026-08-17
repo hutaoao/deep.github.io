@@ -157,7 +157,7 @@ Redux 要求 reducer 是纯函数 — 输入 state + action，输出新 state，
 **5. Git 的 commit**
 每次 commit 不修改历史 snapshot，而是创建一个新的。整个 Git 的 object store 就是结构共享的典范 — 没变的文件直接复用 blob hash。
 
-## 常见误解
+## 常见误解（FAQ）
 
 **❌ 误区 1："展开运算符 `{...obj}` 是深拷贝"**
 它是浅拷贝。嵌套对象仍共享引用，改内层照样会污染原对象。真要深拷贝不丢引用关系，得用递归或 `structuredClone`。

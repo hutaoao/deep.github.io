@@ -109,7 +109,7 @@ const [a, b, c] = await Promise.all([fetchA(), fetchB(), fetchC()]);
 
 ---
 
-## 「其实你每天都在用」
+## 其实你每天都在用
 
 **1. 任何带 `await` 的网络请求**
 
