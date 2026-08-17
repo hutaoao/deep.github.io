@@ -14,6 +14,7 @@ RN 用 Yoga 引擎算好布局后交给**原生控件**渲染，Flutter 用 Skia
 
 ### 1. RN 的渲染链路：JS 描述 → Yoga 布局 → 原生 View
 
+{% raw %}
 ```javascript
 // JS 侧写的就是 React，但你每写一个 <View> 就会生成一个原生 UIView/ViewGroup
 <View style={{ flexDirection: 'row', padding: 16 }}>
@@ -21,6 +22,7 @@ RN 用 Yoga 引擎算好布局后交给**原生控件**渲染，Flutter 用 Skia
   <Text style={{ color: 'gray' }}>副标题</Text>
 </View>
 ```
+{% endraw %}
 
 链路：JS 线程做 diff → Fabric/C++ 线程用 Yoga 做 Flexbox 布局 → 主线程创建/更新原生 View。**每一步都要跨线程通信。**
 

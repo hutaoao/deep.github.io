@@ -108,7 +108,7 @@ watch(searchQuery, async (newQ, oldQ, onCleanup) => {
 
 ## 常见误解
 
-- **❌ 误区：「computed 每次访问都重新计算」** 只有 `_dirty === true` 时才计算。模板里用三次 `{{ doubleCount }}` 只算一次——第一次 dirty→计算→关 dirty，后两次直接读缓存。
+- **❌ 误区：「computed 每次访问都重新计算」** 只有 `_dirty === true` 时才计算。模板里用三次 `{ { doubleCount } }` 只算一次——第一次 dirty→计算→关 dirty，后两次直接读缓存。
 
 - **❌ 误区：「computed 里可以放副作用」** 技术上不报错，但后果灾难：dirty 为 false 时副作用不执行（你以为每次都会发的请求不发），dirty 为 true 时如果没人读 `.value` 也不执行。副作用严格放 watch/watchEffect。
 

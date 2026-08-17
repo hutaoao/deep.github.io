@@ -50,6 +50,7 @@ new ModuleFederationPlugin({
 
 配置好后，宿主应用可以像 `import` 本地模块一样 `import` 远程模块：
 
+{% raw %}
 ```javascript
 // 宿主应用里直接 import 远程模块
 import ProductCard from 'products/ProductCard'; // 'products' 是 remotes 里定义的 key
@@ -59,6 +60,7 @@ function Home() {
 }
 // Webpack 在运行时从 http://localhost:3001/remoteEntry.js 加载该模块
 ```
+{% endraw %}
 
 ### 3. shared：共享依赖避免重复打包
 
