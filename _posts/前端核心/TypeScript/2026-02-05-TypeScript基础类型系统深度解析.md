@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "TypeScript 基础类型系统"
+title: "TypeScript 基础类型系统深度解析"
+description: >
+  TS 基础类型面试不考你认不认识 string | number，而考三道安全心法：unknown 为何优于 any、strictNullChecks 防住了什么、never 为何最被低估。
+  安全心法比死记类型更重要。
 date: 2026-02-05
 categories: ["前端核心", "TypeScript"]
 tags: ["TypeScript", "类型系统", "any", "unknown", "never", "面试"]

@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "TypeScript 类型练习"
+title: "TypeScript 类型练习深度解析"
+description: >
+  类型不是看会的，是敲会的——接口、泛型、keyof、条件类型必须上手实现一遍练出手感。
+  面试时才能不卡壳，本文是配套实战练习。
 date: 2026-02-09
 categories: ["前端核心", "TypeScript"]
 tags: ["TypeScript", "类型系统", "接口", "泛型", "类型推断", "面试"]

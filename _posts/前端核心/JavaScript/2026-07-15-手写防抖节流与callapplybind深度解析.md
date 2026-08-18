@@ -1,6 +1,9 @@
 ---
 layout: post
 title: "手写防抖节流与call/apply/bind深度解析：面试官想听的不止是「背代码」"
+description: >
+  防抖节流控制高频事件，call/apply/bind 是手动操控 this 的三兄弟。
+  面试官想看的不只是代码能跑，更是对 new 优先级、Symbol 临时属性、箭头函数不可改 this 等暗坑的理解。
 date: 2026-07-15 00:00:00 +0800
 categories: ["前端核心", "JavaScript"]
 tags: [防抖, 节流, call, apply, bind, 手写, this]

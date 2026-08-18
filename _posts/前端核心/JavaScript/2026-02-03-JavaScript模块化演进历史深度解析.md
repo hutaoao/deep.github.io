@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "JavaScript 模块化演进史"
+title: "JavaScript 模块化演进史深度解析"
+description: >
+  从 IIFE 到 CJS、AMD、UMD 再到 ESM，每一代解决上一代最痛的点（封装、异步、写法、格式割裂、静态分析）。
+  面试讲清演进脉络，就能说明 import/export 为何是今天这个样子。
 date: 2026-02-03
 categories: ["前端核心", "JavaScript"]
 tags: ["模块化", "IIFE", "CommonJS", "AMD", "UMD", "ESModule", "面试"]

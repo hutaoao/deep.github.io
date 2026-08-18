@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "口述：React Diff完整过程"
+title: "口述：React Diff完整过程深度解析"
+description: >
+  React Diff 是两次判断加三轮遍历：先判单元素还是数组，单元素走 key 到 type 两步，数组走线性扫描、Map 匹配、删除残余。
+  全程贯穿'能复用绝不重建'的最低 DOM 操作原则。
 date: 2026-03-21
 categories: ["前端核心", "React"]
 tags: ["React", "Diff", "Fiber", "key", "面试"]

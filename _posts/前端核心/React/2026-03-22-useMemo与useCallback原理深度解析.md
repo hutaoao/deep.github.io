@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "useMemo与useCallback原理"
+title: "useMemo与useCallback原理深度解析"
+description: >
+  useMemo 缓存计算结果、useCallback 缓存函数引用，底层都是链表中存 [value, deps] 并用 Object.is 比较依赖。
+  useCallback(fn, deps) 本质上是 useMemo(() => fn, deps) 的语法糖。
 date: 2026-03-22
 categories: ["前端核心", "React"]
 tags: ["React", "Hooks", "useMemo", "useCallback", "性能优化", "面试"]

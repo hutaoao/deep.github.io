@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "手写 EventEmitter"
+title: "手写 EventEmitter深度解析"
+description: >
+  EventEmitter 是发布订阅的教科书实现：on 存回调、emit 逐个调、off 精准删、once 一次自毁。
+  面试考 once 的 wrapper 技巧、emit 中 off 自己的遍历安全，以及与观察者模式的区别。
 date: 2026-02-04
 categories: ["前端核心", "JavaScript"]
 tags: ["EventEmitter", "发布订阅", "设计模式", "手写", "面试"]

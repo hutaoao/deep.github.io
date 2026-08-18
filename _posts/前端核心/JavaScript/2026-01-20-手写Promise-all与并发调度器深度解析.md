@@ -1,5 +1,8 @@
 ---
 title: "手写Promise.all与并发调度器深度解析"
+description: >
+  Promise.all/race/allSettled 的底层是计数器加 settled 标志，并发调度器再套一层消费循环控制最大并发数。
+  面试手写重点在边界处理：空数组、错误短路、并发上限。
 date: 2026-01-20
 categories: [前端核心, JavaScript]
 tags: [Promise.all, Promise.race, 并发调度器, 手写实现, JavaScript]

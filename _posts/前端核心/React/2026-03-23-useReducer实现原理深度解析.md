@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "useReducer实现原理"
+title: "useReducer实现原理深度解析"
+description: >
+  useReducer 用纯函数 reducer 集中管理状态转换，内部与 useState 共享同一 Fiber 更新链路。
+  事实上 useState 就是预设了 basicStateReducer 的 useReducer 封装。
 date: 2026-03-23
 categories: ["前端核心", "React"]
 tags: ["React", "Hooks", "useReducer", "useState", "Reducer", "面试"]

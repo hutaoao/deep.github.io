@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "React Router路由原理"
+title: "React Router路由原理深度解析"
+description: >
+  React Router 核心是 BrowserRouter 监听 URL 变化（History API 或 hashchange）、Routes 用评分算法匹配路径、RouteContext 与 Outlet 渲染匹配结果。
+  本质是 URL 与组件映射的声明式实现。
 date: 2026-03-24
 categories: ["前端核心", "React"]
 tags: ["React", "React Router", "路由", "SPA", "面试"]

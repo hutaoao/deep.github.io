@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "口述：React Fiber工作流程"
+title: "口述：React Fiber工作流程深度解析"
+description: >
+  Fiber 渲染分 render（构建 workInProgress 树，可中断）与 commit（DOM 生效，不可中断）两阶段。
+  把'算该改什么'与'真正去改'分离，是可中断渲染的核心设计。
 date: 2026-03-16
 tags: [React, Fiber, 工作流程, render, commit]
 categories: [前端核心, React]

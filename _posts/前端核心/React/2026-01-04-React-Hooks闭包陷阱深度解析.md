@@ -1,6 +1,9 @@
 ---
 layout: post
 title: "React Hooks闭包陷阱深度解析"
+description: >
+  Hooks 每次渲染都是全新函数调用，闭包捕获的是当前渲染的状态快照而非最新值。
+  空依赖让闭包冻结在初值是典型坑，解法为函数式更新、正确声明依赖、useRef 穿透。
 date: 2026-01-04 00:00:00 +0800
 categories: ["前端核心", "React"]
 tags: ["React", "Hooks", "闭包", "useState", "useEffect", "useRef", "useCallback"]

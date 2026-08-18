@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "useEffect实现原理"
+title: "useEffect实现原理深度解析"
+description: >
+  useEffect 把副作用与依赖数组挂在 effect 链表，提交后异步执行、依赖比对跳过无关更新，并在下次执行前或卸载时 cleanup。
+  面试要讲清执行时机、依赖比较与清理机制。
 date: 2026-03-08
 tags: [React, useEffect, Hooks, Fiber]
 categories: [前端核心, React]

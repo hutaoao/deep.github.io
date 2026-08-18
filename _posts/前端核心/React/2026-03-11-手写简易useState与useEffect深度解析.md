@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "手写简易useState与useEffect"
+title: "手写简易useState与useEffect深度解析"
+description: >
+  约 150 行手写 Hooks 运行时，含链表存储、mount/update 双阶段、批量更新队列与依赖比较。
+  把 Hooks 从黑盒变成透明的数据结构操作，面试能徒手写即封神。
 date: 2026-03-11
 tags: [React, useState, useEffect, 手写]
 categories: [前端核心, React]

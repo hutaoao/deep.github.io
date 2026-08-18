@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "手写防抖节流callbindPromise复习"
+title: "手写防抖节流callbindPromise复习深度解析"
+description: >
+  防抖、节流、call、bind、Promise 是命中率最高的手写题集合，覆盖闭包、this、异步、微任务等核心机制。
+  能写出来说明你真正理解这些 API 在底层干了什么。
 date: 2026-03-06
 tags: [JavaScript, 防抖, 节流, call, bind, Promise]
 categories: [前端核心, JavaScript]
