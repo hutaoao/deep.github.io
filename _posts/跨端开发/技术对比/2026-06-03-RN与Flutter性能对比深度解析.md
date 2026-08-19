@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "RN vs Flutter 性能实战：启动/帧率/内存/包体积四维对比"
+title: "RN vs Flutter 性能实战深度解析：启动/帧率/内存/包体积四维对比"
+description: >
+  对比题：RN 与 Flutter 在启动、帧率、内存、包体积四维的实测差异。
+  给出可落地的对比结论，掌握后能答出「两者性能到底差多少、怎么权衡」。
 date: 2026-06-03
 categories: [跨端开发, 技术对比]
 tags: [React Native, Flutter, 性能优化, FPS, 面试]
@@ -90,3 +93,4 @@ Flutter 自绘引擎的优势在 CPU 密集型动画上体现明显：Dart AOT �
 ## 一句话总结
 
 Flutter 胜在渲染管线的极致性能（长列表、复杂动画），RN 胜在运营灵活性（启动快、可热更新、低端机友好）——面试的正确姿势不是站队，是能针对具体场景给出"这个场景下选 X 因为 Y"的推理过程。
+

@@ -1,6 +1,9 @@
 ---
 layout: post
 title: "single-spa原理深度解析"
+description: >
+  single-spa 是微前端的路由调度引擎，不负责沙箱与样式隔离，只监听 URL 变化决定哪个子应用挂载卸载。
+  用应用注册、路由劫持、生命周期契约三件套以极小体积奠定路由驱动微前端的哲学，是 qiankun 等框架的共同底座。
 date: 2026-08-16 00:00:00 +0800
 categories: ["工程化", "架构设计"]
 tags: [single-spa, 应用注册, 路由劫持, 生命周期]

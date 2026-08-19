@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "RN vs Flutter 架构对比：面试官真正关心的5个问题"
+title: "RN vs Flutter 架构对比深度解析：面试官真正关心的5个问题"
+description: >
+  对比题：React Native（桥接/JSI + 原生组件）与 Flutter（自绘引擎）的架构差异。
+  讲清两者渲染与通信模型，掌握后能答出「为什么 Flutter 更可控、RN 更贴近原生」。
 date: 2026-05-31
 categories: [跨端开发, 技术对比]
 tags: [React Native, Flutter, 架构对比, 面试]
@@ -97,3 +100,4 @@ final level = await platform.invokeMethod<int>('getBatteryLevel');
 ## 一句话总结
 
 RN 的路线是"把桥磨薄"（JSI→消灭序列化），Flutter 的路线是"把引擎做强"（Impeller→消灭着色器卡顿）——两条路都在往同一个终点跑：让跨端开发有纯原生的性能。
+

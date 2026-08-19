@@ -1,6 +1,9 @@
 ---
 layout: post
 title: "Loader与Plugin开发深度解析"
+description: >
+  Webpack 的 Loader 是内容翻译器（文件进文件出），Plugin 是生命周期钩子（在编译各阶段注入逻辑），两者构成扩展体系的全部。
+  面试常考如何写一个同步或异步 Loader、Plugin 的 apply 方法与 compiler/compilation 钩子，以及两者的本质区别。
 date: 2026-08-01 00:00:00 +0800
 categories: ["工程化", "构建工具"]
 tags: ["Webpack", "Loader", "Plugin", "自定义Loader", "自定义Plugin"]

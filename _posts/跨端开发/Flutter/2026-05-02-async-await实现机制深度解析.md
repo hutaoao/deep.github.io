@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "Dart async/await 实现机制：从状态机到事件循环，拆开给你看"
+title: "Dart async/await 实现机制深度解析：从状态机到事件循环，拆开给你看"
+description: >
+  async/await 本质是语法糖：拆开状态机与事件循环，讲清 await 如何挂起恢复、与 Future 的关系。
+  掌握后能说清「await 背后发生了什么」以及和微任务的执行顺序。
 date: 2026-05-02
 categories: [跨端开发, Flutter]
 tags: [Dart, async/await, Future, 事件循环, 微任务, 面试]
@@ -151,3 +154,4 @@ Dart 有 **Isolate**（隔离区），每个 Isolate 独立内存、独立事件
 ## 一句话总结
 
 async/await = 编译器状态机 + 事件循环调度 = 单线程也能写出干净利落的异步代码。搞懂这个，80% 的 Flutter 异步 Bug 都能迎刃而解。
+

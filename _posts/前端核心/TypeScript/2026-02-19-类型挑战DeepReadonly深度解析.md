@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "类型挑战：DeepReadonly"
+title: "类型挑战：DeepReadonly 深度解析"
+description: >
+  DeepReadonly 递归把对象及其嵌套子对象全部标记为 readonly，是 type-challenges 的中等标杆题。
+  难点不在语法而在分支顺序：数组、函数、对象、原始类型必须按对顺序判断，一步走错类型就变形，面试常考递归加条件类型的组合。
 date: 2026-02-19 00:00:00 +0800
 categories: ["前端核心", "TypeScript"]
 tags: ["TypeScript", "类型体操", "DeepReadonly", "递归类型", "面试题"]

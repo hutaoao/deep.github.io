@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "Vue Router路由原理"
+title: "Vue Router路由原理深度解析"
+description: >
+  Vue Router 核心是 URL 变化映射为组件切换，通过 Hash 或 History 模式劫持地址变化，用 matcher 算出对应组件树再由 router-view 渲染。
+  中间经过一条可拦截的导航守卫管线，面试常考两种模式的区别、history 模式刷新 404 的原因与解决、以及导航守卫的执行顺序。
 date: 2026-03-04
 tags: [Vue3, Vue Router, 路由, SPA]
 categories: [前端核心, Vue]

@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "手写 Partial / Required / Pick / Omit"
+title: "手写 Partial / Required / Pick / Omit 深度解析"
+description: >
+  TypeScript 内置的 Partial、Required、Pick、Omit 是类型体操的九九乘法表，也是面试高频手写题，写不出来基本告别高级岗。
+  本质都是映射类型加可选必填修饰符，以及 K extends keyof T 的键约束，掌握后可推导出 Mutable、PartialByKeys 等进阶变换。
 date: 2026-02-14
 categories: ["前端核心", "TypeScript"]
 tags: ["TypeScript", "工具类型", "类型体操", "手写实现", "面试"]

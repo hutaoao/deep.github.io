@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "computed 与 watch 原理"
+title: "computed 与 watch 原理深度解析"
+description: >
+  computed 与 watch 共享同一个底层 ReactiveEffect，差异只在两行配置：computed 加 lazy 加 scheduler，watch 加 scheduler 加 immediate。
+  面试能讲清 dirty 标志位的惰性求值与两者配置差异，就覆盖了 Vue3 响应式最常被追问的两个 API。
 date: 2026-02-22
 categories: ["前端核心", "Vue"]
 tags: ["Vue3", "computed", "watch", "watchEffect", "响应式"]

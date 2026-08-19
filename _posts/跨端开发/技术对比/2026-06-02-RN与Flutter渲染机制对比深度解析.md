@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "RN vs Flutter 渲染机制面试指南：Yoga、Skia 和 Fabric 到底谁快"
+title: "RN vs Flutter 渲染机制面试指南深度解析：Yoga、Skia 和 Fabric 到底谁快"
+description: >
+  对比题：RN（Yoga 布局 + 原生视图）与 Flutter（Skia 自绘）的渲染链路与 Fabric 新架构。
+  讲清谁更快、为什么，掌握后能应对渲染性能追问。
 date: 2026-06-02
 categories: [跨端开发, 技术对比]
 tags: [React Native, Flutter, Yoga, Fabric, Skia, 面试]
@@ -108,3 +111,4 @@ RepaintBoundary(
 ## 一句话总结
 
 RN 的渲染路径是 JS → Yoga → 原生 View → GPU（中间每一跳都有开销），Flutter 的路径是 Dart → RenderObject → DisplayList → GPU（全是内部跳转）——面试官不是要你记住每层名字，是要你理解"跨语言调用次数"这个根本差异。
+

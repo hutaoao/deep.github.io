@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "Flutter Widget-Element 绑定：Key 做媒，runtimeType 做主，差分复用靠这一套"
+title: "Flutter Widget-Element 绑定深度解析：Key 做媒，runtimeType 做主，差分复用靠这一套"
+description: >
+  Flutter 复用核心：Widget 与 Element 通过 runtimeType + Key 做 diff 绑定与复用。
+  讲清 Key 的作用与差分复用规则，掌握后能说清「为什么列表项要加 Key」。
 date: 2026-05-07
 categories: [跨端开发, Flutter]
 tags: [Flutter, Widget, Element, Key, 差分, 复用, 面试]
@@ -120,3 +123,4 @@ createElement() → mount() → [ build() → update() → ... ] → unmount() �
 ## 一句话总结
 
 Widget 与 Element 的绑定 = `runtimeType` + `Key` 的匹配规则。不加 Key 靠位置，加了 Key 靠身份。Key 不是银弹——只在需要跨位置追踪状态时才用。
+

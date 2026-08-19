@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "Composition API设计理念"
+title: "Composition API设计理念深度解析"
+description: >
+  Composition API 用函数组合代替选项分散，把同一功能的数据、方法、侦听器写在一起，解决 Options API 组件变大后一个功能改三处的痛点。
+  面试常考它与 Options API 的本质区别、setup 的执行时机，以及为什么大型项目更推荐组合式。
 date: 2026-03-02
 tags: [Vue3, Composition API, setup, 组合式]
 categories: [前端核心, Vue]

@@ -1,6 +1,9 @@
 ---
 layout: post
 title: "Module Federation深度解析"
+description: >
+  Module Federation 是 Webpack5 核心特性，让多个独立构建的应用在运行时共享彼此模块，不用发包、不用对齐版本、不管对方技术栈。
+  核心配置是 name、exposes、remotes，把代码共享从构建时静态打包升级为运行时动态加载，是微前端的又一种实现路径。
 date: 2026-08-17 00:00:00 +0800
 categories: ["工程化", "架构设计"]
 tags: [Module Federation, Webpack, 远程模块, 联邦模块]

@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "口述 RN vs Flutter 全面对比：选型决策的终极问题清单"
+title: "口述 RN vs Flutter 全面对比深度解析：选型决策的终极问题清单"
+description: >
+  口述题：把 RN 与 Flutter 从架构、通信、渲染到生态做全面对比，并给出选型决策清单。
+  掌握后能现场输出完整对比结论，应对综合追问。
 date: 2026-06-04
 categories: [跨端开发, 技术对比]
 tags: [React Native, Flutter, 选型, 综合对比]
@@ -83,3 +86,4 @@ HarmonyOS NEXT 官方推荐 Flutter 为跨端方案之一，华为有专门团�
 ## 一句话总结
 
 RN 让你站在 Web 生态的肩膀上（快发版、省人力、灵活迭代），Flutter 让你站在独立渲染引擎的肩膀上（高性能、跨端一致、像素控制）——没有最好的框架，只有你的最高优先级。
+

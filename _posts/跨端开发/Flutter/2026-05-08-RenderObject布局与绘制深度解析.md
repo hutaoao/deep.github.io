@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "Flutter RenderObject 布局与绘制：父给约束，子定尺寸，这就是游戏规则"
+title: "Flutter RenderObject 布局与绘制深度解析：父给约束，子定尺寸，这就是游戏规则"
+description: >
+  Flutter 渲染管线：父节点给约束（Constraints）、子节点定尺寸，再走绘制。
+  讲清 RenderBox 的 layout/paint 与约束下发，掌握后能答出「ConstrainedBox 等布局组件怎么工作」。
 date: 2026-05-08
 categories: [跨端开发, Flutter]
 tags: [Flutter, RenderObject, RenderBox, 布局, 绘制, 面试]
@@ -137,3 +140,4 @@ RenderObject 可以是**叶子节点**（如 RenderParagraph 渲染文本）。�
 ## 一句话总结
 
 约束传递协议（父给约束，子定尺寸）是 RenderObject 布局的宪法——所有布局问题最终都可以追溯到"谁给了什么约束"这个根本问题上。画出来不难，难的是理解为什么这么画。
+

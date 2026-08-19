@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "RN / Flutter / 鸿蒙 ArkUI 三端选型：决策矩阵与面试答案"
+title: "RN / Flutter / 鸿蒙 ArkUI 三端选型深度解析：决策矩阵与面试答案"
+description: >
+  选型题：RN、Flutter、鸿蒙 ArkUI 三端的技术与生态决策矩阵。
+  讲清不同业务场景下的取舍，掌握后能答出「什么项目该选哪个跨端方案」。
 date: 2026-06-07
 categories: [跨端开发, 技术对比]
 tags: [React Native, Flutter, HarmonyOS, 选型, 面试]
@@ -94,3 +97,4 @@ Q4: 团队技术背景？
 ## 一句话总结
 
 选 RN 是选灵活性（热更新 + Web 复用），选 Flutter 是选一致性（一套代码全平台），选 ArkUI 是选准入资格（鸿蒙原生 + 系统能力）——只有先承认没有银弹，才能做出正确的选型决策。
+

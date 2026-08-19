@@ -1,6 +1,9 @@
 ---
 layout: post
-title: "RN vs Flutter 通信机制对比：从 JSON Bridge 到 JSI 到 Platform Channel"
+title: "RN vs Flutter 通信机制对比深度解析：从 JSON Bridge 到 JSI 到 Platform Channel"
+description: >
+  对比题：RN 从 JSON Bridge 到 JSI、Flutter 的 Platform Channel，讲清跨端通信的演进与性能差异。
+  掌握后能答出「JSI 为什么比 Bridge 快」。
 date: 2026-06-01
 categories: [跨端开发, 技术对比]
 tags: [React Native, Flutter, Bridge, JSI, Platform Channel, 面试]
@@ -99,3 +102,4 @@ JSI TypedArray 的"零拷贝"是关键——Dart FFI 也可以做到同样的效
 ## 一句话总结
 
 RN 的通信进化史是"从 JSON 异步到 JSI 同步"的一条路，Flutter 的通信体系是"Platform Channel（异步）+ FFI（同步）"的双轨制——两条路都在往同一个方向走：让跨语言调用消失。
+
