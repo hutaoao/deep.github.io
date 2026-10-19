@@ -114,7 +114,7 @@ Resource Owner（用户） → Client（你的应用） → Authorization Server
 
 现在唯一该用的流程是**授权码 + PKCE**：
 
-1. 前端生成 `code_verifier`（随机串），算出 `code_challenge = BASE64URL(SHA256(verifier))`；
+1. 客户端生成 `code_verifier`（随机串），算出 `code_challenge = BASE64URL(SHA256(verifier))`；走 BFF 时这一步在后端做，verifier 直接存在服务端会话里；
 2. 跳转授权页，带上 `client_id / redirect_uri / scope / state / code_challenge / code_challenge_method=S256`；
 3. 用户登录并同意，授权服务器 302 回 `redirect_uri?code=...&state=...`；
 4. 回调页校验 `state` 一致（防 CSRF），拿到 `code`；
