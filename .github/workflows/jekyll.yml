@@ -32,15 +32,20 @@ concurrency:
 jobs:
   # Build job
   build:
-    runs-on: ubuntu-latest
+    # 刻意不用 ubuntu-latest：GitHub 已把 ubuntu-latest 切到 ubuntu-26.04，
+    # 而 ruby/setup-ruby 只认识"自己发布时已存在的镜像"，遇到更新的镜像会把它误判成
+    # self-hosted（报 "was detected as self-hosted"）并拒绝安装 Ruby。
+    # 固定到 24.04 保证镜像与 action 的认知一致，构建稳定。
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Ruby
-        # https://github.com/ruby/setup-ruby/releases/tag/v1.207.0
-        uses: ruby/setup-ruby@4a9ddd6f338a97768b8006bf671dfbad383215f4
+        # 用 v1 移动标签而不是钉死某个 SHA：这样新镜像、新 Ruby 版本的适配会自动带上，
+        # 之前钉死的 v1.207.0 正是这次报错的根因。
+        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.1' # Not needed with a .ruby-version file
+          ruby-version: '3.3' # 3.1 已 EOL；3.3 与本机开发环境一致
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
           cache-version: 0 # Increment this number if you need to re-download cached gems
       - name: Setup Pages
@@ -60,7 +65,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: build
     steps:
       - name: Deploy to GitHub Pages
